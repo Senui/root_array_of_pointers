@@ -1,8 +1,6 @@
 <lcgdict>
   <selection>
-    <class name="Base" />
-    <class name="Foo" />
     <class name="Bar" />
-    <class name="InlineVector<Base*, 2>" />
+    <class name="Foo" />
   </selection>
 </lcgdict>
