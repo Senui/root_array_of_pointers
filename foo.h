@@ -5,25 +5,24 @@
 
 #include <Rtypes.h>
 
-class Base {
-public:
-  Base() {}
-  virtual ~Base() {}
+// class Base {
+// public:
+//   Base() {}
+//   virtual ~Base() {}
 
-private:
-  int base_ = 123;
-  ClassDef(Base, 1);
-};
+// private:
+//   int base_ = 123;
+//   ClassDef(Base, 1);
+// };
 
-class Foo : public Base {
+class Foo {
 public:
   Foo() {}
   Foo(int foo) : foo_(foo) {}
-  virtual ~Foo() {}
 
 private:
   int foo_ = 0;
-  ClassDefOverride(Foo, 1);
+  ClassDefNV(Foo, 1);
 };
 
 #endif  // FOO_H_
