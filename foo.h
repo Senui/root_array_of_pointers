@@ -4,6 +4,7 @@
 #include <array>
 
 #include <Rtypes.h>
+#include <TObject.h>
 
 // class Base {
 // public:
@@ -18,10 +19,17 @@
 class Foo {
 public:
   Foo() {}
-  Foo(int foo) : foo_(foo) {}
+  // Foo(TRootIOCtor*) {
+  //   foo_[0] = nullptr;
+  //   foo_[1] = nullptr;
+  // }
 
-private:
-  int foo_ = 0;
+  void Create() {
+    foo_[0] = new TObject();
+    foo_[1] = new TObject();
+  }
+
+  std::array<TObject*, 2> foo_;
   ClassDefNV(Foo, 1);
 };
 
