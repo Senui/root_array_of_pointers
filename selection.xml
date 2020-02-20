@@ -1,6 +1,6 @@
 <lcgdict>
   <selection>
-    <class name="InlineVector<TObject*, 2>" noStreamer="true"/>
-    <class name="VectorWrapper<TObject*>"/>
+    <class name="InlineVector<int, 2>" noStreamer="true"/>
+    <class name="VectorWrapper<int>"/>
   </selection>
 </lcgdict>

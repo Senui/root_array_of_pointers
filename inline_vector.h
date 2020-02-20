@@ -36,38 +36,36 @@ private:
   ClassDefNV(InlineVector, 1);
 };
 
-template <typename T, uint16_t N>
-void InlineVector<T, N>::Streamer(TBuffer &R__b) {
-  std::ofstream file;
-  file.open("streamer.log");
+// template <typename T, uint16_t N>
+template <> void InlineVector<int,2>::Streamer(TBuffer &R__b) {
   if (R__b.IsReading()) {
-    file << "READING..." << std::endl;
-    VectorWrapper<T> vw;
-    R__b.ReadClassBuffer(VectorWrapper<T>::Class(), &vw);
-    R__b.ReadClassBuffer(InlineVector<T, N>::Class(), this);
+    std::cout << "READING..." << std::endl;
+    VectorWrapper<int> vw;
+    R__b.ReadClassBuffer(VectorWrapper<int>::Class(), &vw);
+    R__b.ReadClassBuffer(InlineVector<int, 2>::Class(), this);
     // tranfer vw to this
-    file << vw.vector_ << std::endl;
-    for (auto *ve : vw.vector_) {
-      file << ve << std::endl;
-      file << ve->GetUniqueID() << std::endl;
+    std::cout << "vector.size() =  " << vw.vector_.size() << std::endl;
+    for (auto ve : vw.vector_) {
+      std::cout << ve << std::endl;
       this->push_back(ve);
     }
   } else {
     // transfer data from this to f
-    file << "WRITING..." << std::endl;
-    VectorWrapper<T> vw;
-    vw.vector_.resize(this->size_);
-    for (uint16_t i = 0; i < this->size_; i++) {
-      vw.vector_[i] = this->data_[i];
+    std::cout << "WRITING..." << std::endl;
+    VectorWrapper<int> vw;
+    vw.vector_.resize(size_);
+    for (uint16_t i = 0; i < size_; i++) {
+      std::cout << "value " << data_[i] << std::endl;
+      vw.vector_[i] = data_[i];
     }
-    R__b.WriteClassBuffer(VectorWrapper<T>::Class(), &vw);
-    R__b.WriteClassBuffer(InlineVector<T, N>::Class(), this);
+    R__b.WriteClassBuffer(VectorWrapper<int>::Class(), &vw);
+    R__b.WriteClassBuffer(InlineVector<int, 2>::Class(), this);
   }
 }
 
 #ifdef __ROOTCLING__
 #include "TObject.h"
-static InlineVector<TObject *, 2> iv3;
+static InlineVector<int, 2> iv3;
 #endif
 
 #endif // INLINE_VECTOR_H_
