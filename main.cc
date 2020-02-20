@@ -11,10 +11,9 @@ static constexpr char const *kObjName = "foo";
 
 int main() {
   InlineVector<int, 2> iv;
+  iv.push_back(42);
+  iv.push_back(43);
 
-  for (size_t i = 0; i < 2; i++) {
-    iv[i] = 42 + i;
-  }
 
   TFile f(kFile, "RECREATE");
   f.WriteObject(&iv, kObjName);

@@ -7,6 +7,7 @@
 
 #include "Rtypes.h"
 #include "TBuffer.h"
+#include "TClassTable.h"
 
 template <typename T>
 class VectorWrapper {
@@ -37,12 +38,12 @@ private:
 };
 
 // template <typename T, uint16_t N>
-template <> void InlineVector<int,2>::Streamer(TBuffer &R__b) {
+template <>
+inline void InlineVector<int,2>::Streamer(TBuffer &R__b) {
   if (R__b.IsReading()) {
     std::cout << "READING..." << std::endl;
     VectorWrapper<int> vw;
-    R__b.ReadClassBuffer(VectorWrapper<int>::Class(), &vw);
-    R__b.ReadClassBuffer(InlineVector<int, 2>::Class(), this);
+    R__b.ReadClassBuffer(TClassTable::GetDict("VectorWrapper<int>")(), &vw);
     // tranfer vw to this
     std::cout << "vector.size() =  " << vw.vector_.size() << std::endl;
     for (auto ve : vw.vector_) {
@@ -58,8 +59,7 @@ template <> void InlineVector<int,2>::Streamer(TBuffer &R__b) {
       std::cout << "value " << data_[i] << std::endl;
       vw.vector_[i] = data_[i];
     }
-    R__b.WriteClassBuffer(VectorWrapper<int>::Class(), &vw);
-    R__b.WriteClassBuffer(InlineVector<int, 2>::Class(), this);
+    R__b.WriteClassBuffer(TClassTable::GetDict("VectorWrapper<int>")(), &vw);
   }
 }
 
